@@ -52,6 +52,18 @@ async function run() {
 			res.send(result);
 		});
 
+		app.get('/alltoys/:text', async (req, res) => {
+			const text = req.params.text;
+			if (text == 'car' || text == 'truck' || text == 'sport') {
+				const result = await toyCollection
+					.find({ subCategory: text })
+					.toArray();
+				return res.send(result);
+			}
+			const result = await toyCollection.find({}).toArray();
+			res.send(result);
+		});
+
 		app.get('/toydetails/:id', async (req, res) => {
 			const id = req.params.id;
 			const query = { _id: new ObjectId(id) };
